@@ -9,17 +9,18 @@ import UIKit
 
 class ViewController: UIViewController {
 	
-	private let viewA = UIView()
-	private let viewB = UIView()
-	private let viewC = UIView()
-	private let viewD = UIView()
-	private let viewE = UIView()
+    private let viewA = CustomView(.lightGray, "A")
+    private let viewB = CustomView(.red, "B")
+    private let viewC = CustomView(.blue, "C")
+    private let viewD = CustomView(.yellow, "D")
+    private let viewE = CustomView(.green, "E")
+    private let lowLabel = UILabel()
+    
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		addSubViews()
-		setupViews()
-		addLabels()
+        setupLabel()
 		setupLayout()
 	}
 }
@@ -27,29 +28,12 @@ class ViewController: UIViewController {
 private extension ViewController {
 	func addSubViews() {
 		view.addSubview(viewA)
+        view.addSubview(lowLabel)
 		
 		viewA.addSubview(viewB)
 		viewA.addSubview(viewC)
 		viewB.addSubview(viewD)
 		viewC.addSubview(viewE)
-	}
-	
-	func setupViews() {
-		view.backgroundColor = .white
-		
-		viewA.backgroundColor = .lightGray
-		viewB.backgroundColor = .red
-		viewC.backgroundColor = .blue
-		viewD.backgroundColor = .yellow
-		viewE.backgroundColor = .green
-	}
-	
-	func addLabels() {
-		addLabel(to: viewA, text: "A")
-		addLabel(to: viewB, text: "B")
-		addLabel(to: viewC, text: "C")
-		addLabel(to: viewD, text: "D")
-		addLabel(to: viewE, text: "E")
 	}
 	
 }
@@ -69,6 +53,13 @@ private extension ViewController {
 			label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5)
 		])
 	}
+    
+    func setupLabel() {
+        lowLabel.text = "Здесь будет название выбранной вью"
+        lowLabel.translatesAutoresizingMaskIntoConstraints = false
+        lowLabel.textColor = .black
+    }
+    
 	
 }
 
@@ -106,6 +97,9 @@ private extension ViewController {
 			viewE.centerXAnchor.constraint(equalTo: viewC.centerXAnchor),
 			viewE.widthAnchor.constraint(equalToConstant: 80),
 			viewE.heightAnchor.constraint(equalToConstant: 120),
+            
+            lowLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            lowLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 200)
 		])
 	}
 }
