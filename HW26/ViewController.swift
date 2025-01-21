@@ -19,6 +19,7 @@ class ViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        viewA.delegate = self
 		addSubViews()
         setupLabel()
 		setupLayout()
@@ -102,6 +103,12 @@ private extension ViewController {
             lowLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 200)
 		])
 	}
+}
+
+extension ViewController: ICustomViewDelegate {
+    func getName(_ name: String) {
+        lowLabel.text = name
+    }
 }
 
 #Preview {

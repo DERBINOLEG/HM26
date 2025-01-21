@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol ICustomViewDelegate {
+    func getName(_ name: String)
+}
+
 class CustomView: UIView {
+    
+    var delegate: ICustomViewDelegate?
+    
     private let viewLabel: UILabel = {
         $0.font = UIFont.boldSystemFont(ofSize: 24)
         $0.textColor = .black
@@ -38,5 +45,29 @@ class CustomView: UIView {
             viewLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
             viewLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5)
         ])
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let returnView = super.hitTest(point, with: event)
+        if let view = returnView as? CustomView {
+            delegate?.getName(view.viewLabel.text ?? "")
+        } else {
+            print(returnView)
+        }
+        return returnView
+    }
+    
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        if super.point(inside: point, with: event) {
+            return true
+        } else {
+            for view in subviews {
+                let pointView = view.convert(point, from: self)
+                if view.point(inside: pointView, with: event) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 }
